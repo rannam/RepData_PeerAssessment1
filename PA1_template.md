@@ -14,15 +14,6 @@ Loading and preprocessing the data
 data <- read.csv("activity.csv")
 ```
 
-```
-## Warning in file(file, "rt"): cannot open file 'activity.csv': No such file
-## or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
 
 What is mean total number of steps taken per day?
 
@@ -35,10 +26,6 @@ For this part of the assignment, you can ignore the missing values in the datase
 totalstepsperday <- aggregate(steps ~ date, data, sum)
 ```
 
-```
-## Error in as.data.frame.default(data, optional = TRUE): cannot coerce class ""function"" to a data.frame
-```
-
 2.If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
 
@@ -46,9 +33,7 @@ totalstepsperday <- aggregate(steps ~ date, data, sum)
 hist(totalstepsperday$steps)
 ```
 
-```
-## Error in hist(totalstepsperday$steps): object 'totalstepsperday' not found
-```
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 3.Calculate and report the mean and median of the total number of steps taken per day
 
@@ -58,7 +43,8 @@ summary(totalstepsperday$steps)
 ```
 
 ```
-## Error in summary(totalstepsperday$steps): object 'totalstepsperday' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    8841   10760   10770   13290   21190
 ```
 
 What is the average daily activity pattern?
@@ -68,19 +54,10 @@ What is the average daily activity pattern?
 
 ```r
 avgsteps_5min <- aggregate(steps ~ interval, data, mean)
-```
-
-```
-## Error in as.data.frame.default(data, optional = TRUE): cannot coerce class ""function"" to a data.frame
-```
-
-```r
 plot(avgsteps_5min$interval, avgsteps_5min$steps, type="l")
 ```
 
-```
-## Error in plot(avgsteps_5min$interval, avgsteps_5min$steps, type = "l"): object 'avgsteps_5min' not found
-```
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -90,7 +67,7 @@ avgsteps_5min$interval[avgsteps_5min$steps == max(avgsteps_5min$steps)]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'avgsteps_5min' not found
+## [1] 835
 ```
 
 
@@ -106,7 +83,7 @@ sum(is.na(data$steps))
 ```
 
 ```
-## Error in data$steps: object of type 'closure' is not subsettable
+## [1] 2304
 ```
 
 2.Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
@@ -114,59 +91,16 @@ sum(is.na(data$steps))
 
 ```r
 isna <- is.na(data$steps)
-```
 
-```
-## Error in data$steps: object of type 'closure' is not subsettable
-```
-
-```r
 temp <- data$interval[isna]
-```
 
-```
-## Error in data$interval: object of type 'closure' is not subsettable
-```
 
-```r
 library(plyr)
 temp <- join(data, avgsteps_5min, by = "interval" )
-```
-
-```
-## Error in as.vector(x): object 'avgsteps_5min' not found
-```
-
-```r
 temp$steps2 <- data$steps
-```
-
-```
-## Error in data$steps: object of type 'closure' is not subsettable
-```
-
-```r
 temp$steps <- NULL
-```
-
-```
-## Error in temp$steps <- NULL: object 'temp' not found
-```
-
-```r
 temp$steps2[isna] = round(temp$steps[isna]) 
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'temp' not found
-```
-
-```r
 temp$steps3 <- data$steps
-```
-
-```
-## Error in data$steps: object of type 'closure' is not subsettable
 ```
 
 3.Create a new dataset that is equal to the original dataset but with the missing data filled in.
@@ -175,42 +109,10 @@ temp$steps3 <- data$steps
 ```r
 newdata <- NULL
 newdata$steps_original <- data$steps
-```
-
-```
-## Error in data$steps: object of type 'closure' is not subsettable
-```
-
-```r
 newdata$steps_filled <- temp$steps2
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'temp' not found
-```
-
-```r
 newdata$steps_avg <- temp$steps
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'temp' not found
-```
-
-```r
 newdata$interval <- temp$interval
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'temp' not found
-```
-
-```r
 newdata$date <- temp$date
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'temp' not found
 ```
 
 4.Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -218,26 +120,19 @@ newdata$date <- temp$date
 
 ```r
 totalstepsperdaynew <- aggregate(steps_filled ~ date, newdata, sum)
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'steps_filled' not found
-```
-
-```r
 hist(totalstepsperdaynew$steps_filled)
 ```
 
-```
-## Error in hist(totalstepsperdaynew$steps_filled): object 'totalstepsperdaynew' not found
-```
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
 
 ```r
 summary(totalstepsperdaynew$steps_filled)
 ```
 
 ```
-## Error in summary(totalstepsperdaynew$steps_filled): object 'totalstepsperdaynew' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    9819   10760   10770   12810   21190
 ```
 
 The mean and median total number of steps taken per day is same as before. The Quartile distribution
@@ -252,22 +147,9 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 
 ```r
 newdata$date2 <- as.Date(newdata$date)
-```
-
-```
-## Error in as.Date.default(newdata$date): do not know how to convert 'newdata$date' to class "Date"
-```
-
-```r
 newdata$wk_day_flag <- weekdays(newdata$date2) == "Sunday" | 
         weekdays(newdata$date2) == "Saturday"
-```
 
-```
-## Error in UseMethod("weekdays"): no applicable method for 'weekdays' applied to an object of class "NULL"
-```
-
-```r
 newdata$wk_day_factor_var[newdata$wk_day_flag == TRUE] <- "Weekend"
 
 newdata$wk_day_factor_var[newdata$wk_day_flag == FALSE] <- "Weekday"
@@ -287,35 +169,13 @@ plot_data2 <- newdata[newdata$wk_day_factor_var == "Weekend",]
 
 
 avgsteps_5min_1 <- aggregate(steps_filled ~ interval, plot_data1, mean)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'steps_filled' not found
-```
-
-```r
 avgsteps_5min_2 <- aggregate(steps_filled ~ interval, plot_data2, mean)
-```
 
-```
-## Error in eval(expr, envir, enclos): object 'steps_filled' not found
-```
-
-```r
 plot(avgsteps_5min_1$interval, avgsteps_5min_1$steps, type="l", main = "Weekday")
-```
-
-```
-## Error in plot(avgsteps_5min_1$interval, avgsteps_5min_1$steps, type = "l", : object 'avgsteps_5min_1' not found
-```
-
-```r
 plot(avgsteps_5min_2$interval, avgsteps_5min_2$steps, type="l", main = "Weekend")
 ```
 
-```
-## Error in plot(avgsteps_5min_2$interval, avgsteps_5min_2$steps, type = "l", : object 'avgsteps_5min_2' not found
-```
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
 
 From the above plots, the weekends seem more relaxed with delayed / fewer steps.
 
