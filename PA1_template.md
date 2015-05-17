@@ -1,9 +1,6 @@
----
-title: "PA1_template"
-author: "Ramesh Annam"
-date: "Sunday, May 17, 2015"
-output: html_document
----
+# PA1_template
+Ramesh Annam  
+Sunday, May 17, 2015  
 
 Loading and preprocessing the data
 1.Load the data (i.e. read.csv())
@@ -11,6 +8,7 @@ Loading and preprocessing the data
 
 
 ```r
+setwd("C:/R_annam/RR-proj-1/repdata_data_activity/RepData_PeerAssessment1")
 data <- read.csv("activity.csv")
 ```
 
@@ -33,7 +31,7 @@ totalstepsperday <- aggregate(steps ~ date, data, sum)
 hist(totalstepsperday$steps)
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
 3.Calculate and report the mean and median of the total number of steps taken per day
 
@@ -57,7 +55,7 @@ avgsteps_5min <- aggregate(steps ~ interval, data, mean)
 plot(avgsteps_5min$interval, avgsteps_5min$steps, type="l")
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -124,7 +122,7 @@ totalstepsperdaynew <- aggregate(steps_filled ~ date, newdata, sum)
 hist(totalstepsperdaynew$steps_filled)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
 ```r
 summary(totalstepsperdaynew$steps_filled)
@@ -175,7 +173,7 @@ plot(avgsteps_5min_1$interval, avgsteps_5min_1$steps, type="l", main = "Weekday"
 plot(avgsteps_5min_2$interval, avgsteps_5min_2$steps, type="l", main = "Weekend")
 ```
 
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
 
 From the above plots, the weekends seem more relaxed with delayed / fewer steps.
 

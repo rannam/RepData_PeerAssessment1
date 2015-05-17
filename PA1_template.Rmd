@@ -2,7 +2,10 @@
 title: "PA1_template"
 author: "Ramesh Annam"
 date: "Sunday, May 17, 2015"
-output: html_document
+output:
+  html_document:
+    fig_caption: yes
+    keep_md: yes
 ---
 
 Loading and preprocessing the data
@@ -10,6 +13,7 @@ Loading and preprocessing the data
 2.Process/transform the data (if necessary) into a format suitable for your analysis
 
 ```{r}
+setwd("C:/R_annam/RR-proj-1/repdata_data_activity/RepData_PeerAssessment1")
 data <- read.csv("activity.csv")
 ```
 
